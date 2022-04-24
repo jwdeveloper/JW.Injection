@@ -1,19 +1,19 @@
 # JW.Injection
 
-The goal of creating this project was to learn how dependency injection container works under the hood.
+The goal of creating this project was to learn how a dependency injection container works under the hood.
 
 🤔 ***What is dependecy injection?***
 
-Dependecy injection is desing pattern that is used to deliver needed dependecnicy into a class constructor
+Dependency injection is a design pattern that is used to deliver needed dependency into a class constructor
 you can read more about it [up here](https://refactoring.guru/design-patterns/singleton)
 
 
 🤔 ***What is dependecy injection container?***
 
-To escape from tedious job of creating instance by hand every time some wise people came up with idea to
-automise whole process by creating api library where you just need to register class type into `Container`
-and then just get it. Object with all of its dependecis will be instaciated automatically. Here are some of 
-library mostly used by people
+To escape from the tedious job of creating an instance and putting them into the constructor, a group of the wise people came up with the idea to
+automize the whole process by creating API library where you just need to register the class type into `Container`
+and then just get it. Object with all of its dependencies will be instantiated automatically. Here are some of 
+the library mostly used by people
 
  > [Microsoft.DependencyInjection](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/7.0.0-preview.3.22175.4)
  
