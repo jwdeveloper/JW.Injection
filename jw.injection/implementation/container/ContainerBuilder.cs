@@ -12,9 +12,14 @@ public class ContainerBuilder : IContainerBuilder
     {
         _container = new Container(
             new InstanceResolver(),
-            new MetadateResolver());
+            new MetadataResolver());
     }
 
+    public ContainerBuilder(IContainer container)
+    {
+        _container = container;
+    }
+    
     public IContainerBuilder RegisterSingleton<Implementation>()
     {
         _container.Register(null, typeof(Implementation), null, LifeTime.Singleton);

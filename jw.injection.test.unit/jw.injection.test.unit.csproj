@@ -18,10 +18,11 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-       
+        <PackageReference Include="Moq" Version="4.17.2" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\jw.injection.test.benchmark\jw.injection.test.benchmark.csproj" />
       <ProjectReference Include="..\jw.injection\jw.injection.csproj" />
     </ItemGroup>
 

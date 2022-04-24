@@ -5,7 +5,17 @@ namespace jw.injection.implementation.metadata;
 
 public class InjectionMetadataDictionary : IInjectionMetadataDictionary
 {
-    private readonly Dictionary<Type, IInjectionMetadata> _injections = new ();
+    private readonly IDictionary<Type, IInjectionMetadata> _injections;
+
+    public InjectionMetadataDictionary()
+    {
+        _injections = new Dictionary<Type, IInjectionMetadata>();
+    }
+    
+    public InjectionMetadataDictionary(IDictionary<Type, IInjectionMetadata> injections)
+    {
+        _injections = injections;
+    }
     
     public IInjectionMetadata Find(Type type)
     {

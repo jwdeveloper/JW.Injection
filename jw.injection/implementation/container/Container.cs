@@ -10,11 +10,18 @@ public class Container : IContainer
 {
     private readonly IInjectionMetadataDictionary _injectionsMetadata;
     private readonly IInstanceResolver _instanceResolver;
-    private readonly IMetadateResolver _metadataResolver;
+    private readonly IMetadataResolver _metadataResolver;
 
-    public Container(IInstanceResolver instanceResolver, IMetadateResolver metadataResolver)
+    public Container(IInstanceResolver instanceResolver, IMetadataResolver metadataResolver)
     {
         _injectionsMetadata = new InjectionMetadataDictionary();
+        _metadataResolver = metadataResolver;
+        _instanceResolver = instanceResolver;
+    }
+    
+    public Container(IInstanceResolver instanceResolver, IMetadataResolver metadataResolver, IInjectionMetadataDictionary metadataDictionary)
+    {
+        _injectionsMetadata = metadataDictionary;
         _metadataResolver = metadataResolver;
         _instanceResolver = instanceResolver;
     }

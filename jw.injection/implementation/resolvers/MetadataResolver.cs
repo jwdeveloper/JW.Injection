@@ -7,7 +7,7 @@ using jw.injection.implementation.metadata;
 
 namespace jw.injection.implementation.resolvers;
 
-public class MetadateResolver : IMetadateResolver
+public class MetadataResolver : IMetadataResolver
 {
     public IInjectionMetadata CreateMetadata(Type type, Func<object> provider, LifeTime lifeTime)
     {

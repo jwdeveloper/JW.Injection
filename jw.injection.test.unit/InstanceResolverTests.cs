@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using jw.injection.api.enums;
+using jw.injection.api.resolvers;
 using jw.injection.implementation.metadata;
 using jw.injection.implementation.resolvers;
 using jw.injection.test.unit.Data;
@@ -8,18 +9,41 @@ using Xunit;
 
 namespace jw.injection.test.unit;
 
-public class InstanceProviderTests
+public class InstanceResolverTests
 {
 
-    private readonly InstanceResolver sut;
+    private readonly IInstanceResolver sut;
     
     
-    public InstanceProviderTests()
+    public InstanceResolverTests()
     {
-        this.sut = new InstanceResolver();
+        sut = new InstanceResolver();
     }
 
-
+    
+    [Fact]
+    public void Should_CreateInstance()
+    {
+        
+    }
+    [Fact]
+    public void Should_PrepareInstnace()
+    {
+        
+    }
+    
+    [Fact]
+    public void Should_ResolveConstructor()
+    {
+        
+    }
+    
+    [Fact]
+    public void Should_ResolveFields()
+    {
+       
+    }
+    
     [Fact]
     public void ShouldCreateInstnace()
     {
@@ -78,7 +102,7 @@ public class InstanceProviderTests
     public InjectionMetadataDictionary CreateInjections()
     {
         var result = new InjectionMetadataDictionary();
-        var metadataResolver = new MetadateResolver();
+        var metadataResolver = new MetadataResolver();
         var metadata1 = metadataResolver.CreateMetadata(typeof(ExampleClass), null, LifeTime.Transient);
         var metadata2  = metadataResolver.CreateMetadata(typeof(ExampleSettingsClass), null, LifeTime.Transient);
         result.Add(typeof(ExampleClass),metadata1);

@@ -1,81 +1,111 @@
-﻿using jw.injection.api.enums;
+﻿using System;
+using jw.injection.api.container;
+using jw.injection.api.enums;
+using jw.injection.api.metadata;
+using jw.injection.api.resolvers;
 using jw.injection.implementation.container;
-using jw.injection.implementation.resolvers;
+using jw.injection.implementation.metadata;
 using jw.injection.test.unit.Data;
+using Moq;
 using Xunit;
 
 namespace jw.injection.test.unit;
 
 public class ContainerTests
 {
-    private readonly Container sut;
+    private readonly IContainer sut;
+    private readonly Mock<IInstanceResolver> _instanceResolverMock;
+    private readonly Mock<IMetadataResolver> _metadataResolverMock;
+    private readonly Mock<IInjectionMetadataDictionary> _injectionMetadataDictionaryMock;
 
     public ContainerTests()
     {
-        sut = new Container(new InstanceResolver(), new MetadateResolver());
+        _instanceResolverMock = new Mock<IInstanceResolver>();
+        _metadataResolverMock = new Mock<IMetadataResolver>();
+        _injectionMetadataDictionaryMock = new Mock<IInjectionMetadataDictionary>();
+        sut = new Container(_instanceResolverMock.Object, _metadataResolverMock.Object,
+            _injectionMetadataDictionaryMock.Object);
     }
 
 
     [Fact]
     public void ShouldRegister()
     {
-        sut.Register(typeof(IExampleSettingsClass), typeof(ExampleSettingsClass), null, LifeTime.Transient);
+        //Arrange
+        var interfaceType = typeof(IExampleSettingsClass);
+        var classType = typeof(ExampleSettingsClass);
+        var lifeTime = LifeTime.Transient;
+        Func<object> provider = null;
+
+        var metadata = new InjectionMetadata();
         
-        var f1 = sut.Find<IExampleSettingsClass>();
-        var f2 = sut.Find<IExampleSettingsClass>();
+        _metadataResolverMock.Setup(c => c.CreateMetadata(
+                It.IsAny<Type>(),
+                It.IsAny<Func<object>>(),
+                It.IsAny<LifeTime>()))
+            .Returns(metadata);
+
+        //Act
+          sut.Register(interfaceType, classType, provider, lifeTime);
+
+        //Assert
+        _metadataResolverMock.Verify(x => x.CreateMetadata(
+            classType,
+            provider,
+            LifeTime.Transient),
+            Times.Once());
         
-        Assert.NotEqual(f1,f2);
-    }
-    
-    [Fact]
-    public void ShouldRegister2()
-    {
-        sut.Register(typeof(IExampleSettingsClass), typeof(ExampleSettingsClass), null, LifeTime.Singleton);
-        
-        var f1 = sut.Find<IExampleSettingsClass>();
-        var f2 = sut.Find<IExampleSettingsClass>();
-        
-        Assert.Equal(f1,f2);
+        _injectionMetadataDictionaryMock.Verify(x => x.Add(interfaceType, metadata), Times.Once());
     }
 
     [Fact]
     public void ShouldRegisterWithoutInterface()
     {
-        sut.Register(null, typeof(ExampleSettingsClass), null, LifeTime.Singleton);
-        
-        var f1 = sut.Find<ExampleSettingsClass>();
-        var f2 = sut.Find<ExampleSettingsClass>();
-        
-        Assert.Equal(f1,f2);
-    }
-    [Fact]
-    public void ShouldRegisterWithProvider()
-    {
-        sut.Register(
-            typeof(IExampleSettingsClass),
-            typeof(ExampleSettingsClass),
-            () => new ExampleSettingsClass(),
-            LifeTime.Singleton);
-        
-        var f1 = sut.Find<IExampleSettingsClass>();
-        var f2 = sut.Find<IExampleSettingsClass>();
-        
-        Assert.Equal(f1,f2);
-    }
+        //Arrange
+        Type interfaceType = null;
+        var classType = typeof(ExampleSettingsClass);
+        var lifeTime = LifeTime.Transient;
+        Func<object> provider = null;
 
-    [Fact]
-    public void ShouldRegisterWithProvider2()
-    {
-        sut.Register(
-            typeof(IExampleSettingsClass),
-            typeof(ExampleSettingsClass),
-            () => new ExampleSettingsClass(),
-            LifeTime.Transient);
+        var metadata = new InjectionMetadata();
         
-        var f1 = sut.Find<IExampleSettingsClass>();
-        var f2 = sut.Find<IExampleSettingsClass>();
+        _metadataResolverMock.Setup(c => c.CreateMetadata(
+                It.IsAny<Type>(),
+                It.IsAny<Func<object>>(),
+                It.IsAny<LifeTime>()))
+            .Returns(metadata);
+
+        //Act
+        sut.Register(interfaceType, classType, provider, lifeTime);
+
+        //Assert
+        _metadataResolverMock.Verify(x => x.CreateMetadata(
+                classType,
+                provider,
+                LifeTime.Transient),
+            Times.Once());
         
-        Assert.NotEqual(f1,f2);
+        _injectionMetadataDictionaryMock.Verify(x => x.Add(classType, metadata), Times.Once());
     }
-  
+    
+    [Fact]
+    public void ShouldFind()
+    {
+        //Arrange
+        var interfaceType = typeof(IExampleSettingsClass);
+        Func<object> provider = null;
+
+        var metadata = new InjectionMetadata();
+        var exampleSettings = new ExampleSettingsClass();
+        
+        _injectionMetadataDictionaryMock.Setup(c => c.Find(interfaceType)).Returns(metadata);
+        _instanceResolverMock.Setup(c => c.CreateInstance( metadata,_injectionMetadataDictionaryMock.Object)).Returns(exampleSettings);
+        //Act
+        var result = sut.Find<IExampleSettingsClass>();
+        //Assert
+
+        Assert.Equal(exampleSettings, result);
+        _injectionMetadataDictionaryMock.Verify(x => x.Find(interfaceType),Times.Once());
+        _instanceResolverMock.Verify(x => x.CreateInstance(metadata,_injectionMetadataDictionaryMock.Object), Times.Once());
+    }
 }
