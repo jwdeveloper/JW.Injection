@@ -5,7 +5,7 @@ The goal of creating this project was to learn how a dependency injection contai
 🤔 ***What is dependecy injection?***
 
 Dependency injection is a design pattern that is used to deliver needed dependency into a class constructor
-you can read more about it [up here](https://refactoring.guru/design-patterns/singleton)
+you can read more about it [up here](https://www.youtube.com/watch?v=tW6UHD81SG0&ab_channel=ZakH.)
 
 
 🤔 ***What is dependecy injection container?***
