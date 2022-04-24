@@ -65,7 +65,42 @@ GameSettings 23458411
 =================================================
 ```
 
-### Example classes
+# Example classes
+## Game
+```c#
+public interface IGame
+{
+    public void DisplayObjects();
+}
+
+public class Game : IGame
+{
+    private readonly IPlayer _player1;
+    private readonly IPlayer _player2;
+    private readonly GameSettings _gameSettings;
+
+    public Game(IPlayer player1, IPlayer player2, GameSettings gameSettings)
+    {
+        _player1 = player1;
+        _player2 = player2;
+        _gameSettings = gameSettings;
+        Console.WriteLine($"Created -> {GetType()}  Hash Code: {GetHashCode()}");
+    }
+
+    public void DisplayObjects()
+    {
+        //hashcode is basically id of the object
+        Console.WriteLine("========= Objects hash codes ==========");
+        Console.WriteLine($"Game {GetHashCode()}");
+        _player1.DisplayObjects("Player1");
+        _player2.DisplayObjects("Player2");
+        Console.WriteLine($"GameSettings {_gameSettings.GetHashCode()}");
+        Console.WriteLine("=======================================");
+    }
+}
+```
+
+## Player
 ```c#
 public interface IPlayer
 {
@@ -100,7 +135,10 @@ public class Player : IPlayer
         Console.WriteLine($"{playerName}.GameSettings {_gameSettings.GetHashCode()}");
     }
 }
+```
 
+## PlayerStats
+```c#
 public interface IPlayerStats
 {
 }
@@ -112,7 +150,10 @@ public class PlayerStats : IPlayerStats
         Console.WriteLine($"Created -> {GetType()}  Hash Code: {GetHashCode()}");
     }
 }
+```
 
+## GameSettings
+```c#
 public class GameSettings
 {
     private readonly string _filePath;
