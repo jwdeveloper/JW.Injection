@@ -21,7 +21,7 @@ the most popluar libraris
 
  > [UnityContainer](https://unitycontainer.github.io/)	
 
- Down below is my implementation and I strongly encourage you to look into [code](https://github.com/jwdeveloper/JW.Injection/tree/master/jw.injection/implementation) and learn how the whole thing works 😀
+ Down below is my implementation and I strongly encourage you to look into the [code](https://github.com/jwdeveloper/JW.Injection/tree/master/jw.injection/implementation) and explore how the whole thing works 😀
  
 ### Usage
 ```c#
