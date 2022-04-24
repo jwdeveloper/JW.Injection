@@ -45,6 +45,7 @@ game.DisplayObjects();
 
 ### Output
 ```cmd
+Hash code is basically Id of the object
 =================================================
 Created -> GameSettings  Hash Code: 23458411
 Created -> PlayerStats  Hash Code: 21083178
