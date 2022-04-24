@@ -25,6 +25,9 @@ the library mostly used by people
  
 ### Usage
 ```c#
+//Transient means Instance of class will be created time new
+//Singleton means Instance will be created once
+
 builder.RegisterTransient<IGame, Game>();
 builder.RegisterTransient<IPlayer, Player>();
 builder.RegisterTransient<IPlayerStats, PlayerStats>();
