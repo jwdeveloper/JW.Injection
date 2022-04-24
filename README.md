@@ -10,7 +10,7 @@ you can read more about it [up here](https://refactoring.guru/design-patterns/si
 
 🤔 ***What is dependecy injection container?***
 
-To escape from the tedious job of creating an instance and putting them into the constructor, a group of the wise people came up with the idea to
+To escape from the tedious job of creating the objects instances and putting them into the constructor, a group of the wise people came up with the idea to
 automize the whole process by creating API library where you just need to register the class type into `Container`
 and then just get it. Object with all of its dependencies will be instantiated automatically. Here are some of 
 the library mostly used by people
